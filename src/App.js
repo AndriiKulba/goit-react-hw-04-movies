@@ -20,7 +20,11 @@ class App extends Component {
     error: null,
   };
   componentDidMount() {
-    Api.FetchImages().then(data => console.log(data));
+    Api.FetchTrandMovies().then(data => console.log(data));
+    Api.FetchSearchMovies('batman').then(data => console.log(data));
+    Api.FetchDetailMovies('484718').then(data => console.log(data));
+    Api.FetchCreditslMovies('484718').then(data => console.log(data));
+    Api.FetchReviewsMovies('484718').then(data => console.log(data));
   }
   // componentDidUpdate(prevProps, prevState) {
   //   if (prevState.searchQuery !== this.state.searchQuery) {
