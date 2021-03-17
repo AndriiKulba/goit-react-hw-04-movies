@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import Api from './services/Api';
-import Searchbar from './components/Searchbar';
-import ImageGallery from './components/ImageGallery';
-import ImageGalleryItem from './components/ImageGalleryItem';
-import Loader from './components/Loader';
-import Modal from './components/Modal';
-import Button from './components/Button';
+import AppBar from './components/AppBAr/AppBar';
+import Container from './components/Container/Container';
+import HomePage from './views/HomePage';
+import MoviesPage from './views/MoviesPage';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -20,11 +19,11 @@ class App extends Component {
     error: null,
   };
   componentDidMount() {
-    Api.FetchTrandMovies().then(data => console.log(data));
-    Api.FetchSearchMovies('batman').then(data => console.log(data));
-    Api.FetchDetailMovies('484718').then(data => console.log(data));
-    Api.FetchCreditslMovies('484718').then(data => console.log(data));
-    Api.FetchReviewsMovies('484718').then(data => console.log(data));
+    Api.fetchTrandMovies().then(data => console.log(data));
+    Api.fetchSearchMovies('batman').then(data => console.log(data));
+    Api.fetchDetailMovies('484718').then(data => console.log(data));
+    Api.fetchCreditslMovies('484718').then(data => console.log(data));
+    Api.fetchReviewsMovies('484718').then(data => console.log(data));
   }
   // componentDidUpdate(prevProps, prevState) {
   //   if (prevState.searchQuery !== this.state.searchQuery) {
@@ -81,7 +80,17 @@ class App extends Component {
     } = this.state;
     return (
       <div className="App">
-        {/* <Searchbar onSubmit={this.onChangeQuery} />
+        <Container>
+          <AppBar />
+
+          <Switch>
+            <Route path="/" exact component={HomePage} />
+            <Route path="/movies" component={MoviesPage} />
+            {/* <Route path="/contact" component={Contact} />
+          <Route component={NotFound} /> */}
+          </Switch>
+
+          {/* <Searchbar onSubmit={this.onChangeQuery} />
         <ImageGallery>
           <ImageGalleryItem
             Images={arrayImages}
@@ -98,6 +107,7 @@ class App extends Component {
         {showModal && (
           <Modal activeImage={activeImage} toggleModal={this.toggleModal} />
         )} */}
+        </Container>
       </div>
     );
   }
