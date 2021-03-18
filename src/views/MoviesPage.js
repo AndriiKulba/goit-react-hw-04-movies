@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import Api from '../services/Api';
-import PageHeading from '../components/PageHeading/PageHeading';
-
+import PageHeading from '../components/PageHeading';
+import Searchbar from '../components/Searchbar';
 export default function BooksView() {
   //   const { url } = useRouteMatch();
   //   const [books, setBooks] = useState(null);
@@ -14,6 +14,8 @@ export default function BooksView() {
   return (
     <>
       <PageHeading text="Movies" />
+      <Searchbar />
+
       {/* {books && ( */}
       <ul>
         <li>1</li>

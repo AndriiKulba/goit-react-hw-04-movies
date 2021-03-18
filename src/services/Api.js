@@ -36,8 +36,8 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 //   FetchReviewsMovies,
 // };
 // /trending/all / day;
-async function fetchWithErrorHandling(url = '', config = {}) {
-  const response = await fetch(url, config);
+async function fetchWithErrorHandling(url = '') {
+  const response = await fetch(url);
   return response.ok
     ? await response.json()
     : Promise.reject(new Error('Not found'));

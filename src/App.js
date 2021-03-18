@@ -80,17 +80,16 @@ class App extends Component {
     } = this.state;
     return (
       <div className="App">
-        <Container>
-          <AppBar />
+        <AppBar />
 
-          <Switch>
-            <Route path="/" exact component={HomePage} />
-            <Route path="/movies" component={MoviesPage} />
-            {/* <Route path="/contact" component={Contact} />
+        <Switch>
+          <Route path="/" exact component={HomePage} />
+          <Route path="/movies" component={MoviesPage} />
+          {/* <Route path="/contact" component={Contact} />
           <Route component={NotFound} /> */}
-          </Switch>
+        </Switch>
 
-          {/* <Searchbar onSubmit={this.onChangeQuery} />
+        {/* <Searchbar onSubmit={this.onChangeQuery} />
         <ImageGallery>
           <ImageGalleryItem
             Images={arrayImages}
@@ -107,7 +106,6 @@ class App extends Component {
         {showModal && (
           <Modal activeImage={activeImage} toggleModal={this.toggleModal} />
         )} */}
-        </Container>
       </div>
     );
   }
