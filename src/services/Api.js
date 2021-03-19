@@ -2,6 +2,7 @@ import axios from 'axios';
 const KEY = '6660d5f7e20d8791cca6091c12d1e803';
 axios.defaults.baseURL = 'https://api.themoviedb.org/3';
 const BASE_URL = 'https://api.themoviedb.org/3';
+const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original';
 
 // const FetchTrandMovies = () => {
 //   let url = `trending/all/day?api_key=${KEY}&page=1`;
@@ -43,13 +44,26 @@ async function fetchWithErrorHandling(url = '') {
     : Promise.reject(new Error('Not found'));
 }
 
+async function fetcImagehWithErrorHandling(url = '') {
+  const response = await fetch(url);
+  return response.ok
+    ? await response()
+    : Promise.reject(new Error('Not found'));
+}
+
 function fetchAuthors(id) {
   let url = `${BASE_URL}/movie/${id}?api_key=${KEY}&append_to_response=reviews`;
   return fetchWithErrorHandling(url);
 }
 
+function fetchImage(poster) {
+  let url = `${IMAGE_BASE_URL}${poster}`;
+
+  return url;
+}
+
 function fetchTrandMovies() {
-  let url = `${BASE_URL}/trending/all/day?api_key=${KEY}`;
+  let url = `${BASE_URL}/trending/movie/week?api_key=${KEY}`;
   return fetchWithErrorHandling(url);
 }
 
@@ -59,12 +73,12 @@ function fetchSearchMovies(query) {
 }
 
 function fetchDetailMovies(id) {
-  let url = `${BASE_URL}/movie/${id}?api_key=${KEY}`;
+  let url = `${BASE_URL}/movie/${id}?api_key=${KEY}&append_to_response=videos,images`;
   return fetchWithErrorHandling(url);
 }
 
 function fetchCreditslMovies(id) {
-  let url = `${BASE_URL}/movie/${id}?api_key=${KEY}&append_to_response=credits`;
+  let url = `${BASE_URL}/movie/${id}?api_key=${KEY}&append_to_response=credits,reviews`;
   return fetchWithErrorHandling(url);
 }
 
@@ -87,4 +101,5 @@ export default {
   fetchDetailMovies,
   fetchCreditslMovies,
   fetchReviewsMovies,
+  fetchImage,
 };

@@ -19,6 +19,8 @@ class App extends Component {
     error: null,
   };
   componentDidMount() {
+    const url = '/srYya1ZlI97Au4jUYAktDe3avyA.jpg';
+    console.log(Api.fetchImage(url));
     Api.fetchTrandMovies().then(data => console.log(data));
     Api.fetchSearchMovies('batman').then(data => console.log(data));
     Api.fetchDetailMovies('484718').then(data => console.log(data));
