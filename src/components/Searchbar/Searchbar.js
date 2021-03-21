@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import s from './Searchbar.module.css';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,6 +10,7 @@ class Searchbar extends Component {
     this.setState({ query: e.currentTarget.value });
   };
   handleSubmit = e => {
+    console.log(55555);
     e.preventDefault();
     this.props.onSubmit(this.state.query);
     this.setState({ query: '' });

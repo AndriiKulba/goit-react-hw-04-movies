@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch, Route } from 'react-router-dom';
 import Api from '../services/Api';
 import PageHeading from '../components/PageHeading';
 import Searchbar from '../components/Searchbar';
@@ -13,21 +13,43 @@ class MoviesPage extends Component {
   //   useEffect(() => {
   //     bookShelfAPI.fetchBooks().then(setBooks);
   //   }, []);
-  state = {
-    arrayMovies: [],
-  };
-  componentDidMount() {
-    Api.fetchSearchMovies('superman').then(data => {
+  state = { searchQuery: '', arrayMovies: [] };
+  // componentDidMount() {
+  //   this.fetchMovies();
+  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.searchQuery !== this.state.searchQuery) {
+      this.fetchMovies();
+    }
+  }
+  fetchMovies = () => {
+    const { searchQuery } = this.state;
+    console.log(searchQuery);
+    Api.fetchSearchMovies(searchQuery).then(data => {
       this.setState(prevState => ({
         arrayMovies: [...prevState.arrayMovies, ...data.results],
       }));
     });
-  }
+  };
+  onChangeQuery = query => {
+    console.log(12345);
+    this.setState({
+      searchQuery: query,
+      arrayMovies: [],
+    });
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: `query=${query}`,
+    });
+  };
+
   render() {
+    const { searchQuery, arrayMovies } = this.state;
+
     return (
       <>
         <PageHeading text="Movies" />
-        <Searchbar />
+        <Searchbar onSubmit={this.onChangeQuery} />
         <Container>
           <MoviesList Movies={this.state.arrayMovies} />
         </Container>
