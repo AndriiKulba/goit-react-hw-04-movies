@@ -33,7 +33,7 @@ function fetchDetailMovies(id) {
 }
 
 function fetchCreditslMovies(id) {
-  let url = `${BASE_URL}/movie/${id}?api_key=${KEY}&append_to_response=credits,reviews`;
+  let url = `${BASE_URL}/movie/${id}?api_key=${KEY}&append_to_response=credits`;
   return fetchWithErrorHandling(url);
 }
 

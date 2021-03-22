@@ -5,7 +5,6 @@ import DetailsMovie from '../components/DetailsMovie';
 
 class MovieDetailsPage extends Component {
   render() {
-    console.log(this.props);
     return (
       <>
         <Container>

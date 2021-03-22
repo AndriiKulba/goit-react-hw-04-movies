@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Api from '../../services/Api';
 import s from './MoviePreview.module.css';
 import defaultImage from './poster2.jpg';
@@ -15,5 +16,8 @@ const MoviePreview = ({ title, image }) => {
     </>
   );
 };
-
+MoviePreview.propTypes = {
+  title: PropTypes.string.isRequired,
+  image: PropTypes.string,
+};
 export default MoviePreview;

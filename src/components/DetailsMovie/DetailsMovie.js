@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, NavLink, Route } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import Api from '../../services/Api';
 import Cast from '../Cast';
 import defaultImage from './poster.png';
@@ -22,8 +22,6 @@ class DetailsMovie extends Component {
   handleGoBack = () => {
     const { history, location } = this.props;
 
-    console.log(history);
-    console.log(location);
     if (location.state && location.state.from) {
       return history.push(location.state.from);
     }

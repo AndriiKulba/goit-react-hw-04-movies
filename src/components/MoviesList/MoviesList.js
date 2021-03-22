@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Api from '../../services/Api';
 import MoviePreview from '../MoviePreview';
-import defaultImage from './poster2.jpg';
 import s from './MoviesList.module.css';
 
 class MoviesList extends Component {
-  getImage(bd) {
-    return bd ? Api.fetchImage(bd) : defaultImage;
-  }
   render() {
     const { Movies, location } = this.props;
     return (
@@ -30,4 +25,14 @@ class MoviesList extends Component {
     );
   }
 }
+
+MoviesList.propTypes = {
+  Movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      backdrop_path: PropTypes.string,
+    }),
+  ),
+};
 export default withRouter(MoviesList);

@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import s from './Reviews.module.css';
-import Api from '../../services/Api';
 
 class Reviews extends Component {
   render() {
     const { reviews } = this.props;
-    console.log(this.props);
     return reviews.results.length > 0 ? (
-      reviews.results.map(review => {
+      reviews.results.map(({ id, author, content }) => {
         return (
-          <li key={review.id} className={s.Reviews}>
-            <h3>Author: {review.author}</h3>
-            <p>{review.content}</p>
+          <li key={id} className={s.Reviews}>
+            <h3>Author: {author}</h3>
+            <p>{content}</p>
           </li>
         );
       })
@@ -20,5 +19,13 @@ class Reviews extends Component {
     );
   }
 }
-
+Reviews.propTypes = {
+  results: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      author: PropTypes.string,
+      content: PropTypes.string,
+    }),
+  ),
+};
 export default Reviews;

@@ -15,14 +15,14 @@ class MoviesPage extends Component {
     isLoading: false,
     error: null,
   };
-  componentDidMount() {
+  async componentDidMount() {
     this.props.location.query &&
       this.setState({
         searchQuery: this.props.location.query,
         arrayMovies: [],
       });
   }
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.fetchMovies();
     }
@@ -59,12 +59,17 @@ class MoviesPage extends Component {
   };
 
   render() {
-    const { arrayMovies, isLoading } = this.state;
+    const { arrayMovies, isLoading, error } = this.state;
 
     return (
       <>
         <PageHeading text="Movies" />
         <Searchbar onSubmit={this.onChangeQuery} />
+        {error && (
+          <div className="errorMassege">
+            Whoops, something went wrong: {error.message}
+          </div>
+        )}
         <Container>
           <MoviesList Movies={arrayMovies} />
         </Container>
