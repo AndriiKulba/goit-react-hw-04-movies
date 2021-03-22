@@ -10,7 +10,6 @@ class Searchbar extends Component {
     this.setState({ query: e.currentTarget.value });
   };
   handleSubmit = e => {
-    console.log(55555);
     e.preventDefault();
     this.props.onSubmit(this.state.query);
     this.setState({ query: '' });
@@ -30,7 +29,7 @@ class Searchbar extends Component {
             value={query}
             autoComplete="off"
             autoFocus
-            placeholder="Search images and photos"
+            placeholder="Search movie"
             onChange={this.handleChange}
           />
         </form>

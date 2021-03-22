@@ -9,8 +9,8 @@ export default class Load extends Component {
         type="BallTriangle"
         color="#21319c"
         secondaryColor="#5d75fd"
-        height={40}
-        width={40}
+        height={80}
+        width={80}
         className={s.loader}
       />
     );

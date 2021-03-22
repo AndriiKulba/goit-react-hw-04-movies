@@ -1,58 +1,79 @@
 import React, { Component } from 'react';
-import { Link, useRouteMatch, Route } from 'react-router-dom';
 import Api from '../services/Api';
 import PageHeading from '../components/PageHeading';
 import Searchbar from '../components/Searchbar';
 import MoviesList from '../components/MoviesList';
 import Container from '../components/Container/Container';
+import Button from '../components/Button';
+import Loader from '../components/Loader';
 
 class MoviesPage extends Component {
-  //   const { url } = useRouteMatch();
-  //   const [books, setBooks] = useState(null);
-
-  //   useEffect(() => {
-  //     bookShelfAPI.fetchBooks().then(setBooks);
-  //   }, []);
-  state = { searchQuery: '', arrayMovies: [] };
-  // componentDidMount() {
-  //   this.fetchMovies();
-  // }
+  state = {
+    searchQuery: '',
+    arrayMovies: [],
+    currentPage: 1,
+    isLoading: false,
+    error: null,
+  };
+  componentDidMount() {
+    this.props.location.query &&
+      this.setState({
+        searchQuery: this.props.location.query,
+        arrayMovies: [],
+      });
+  }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.fetchMovies();
     }
   }
   fetchMovies = () => {
-    const { searchQuery } = this.state;
-    console.log(searchQuery);
-    Api.fetchSearchMovies(searchQuery).then(data => {
-      this.setState(prevState => ({
-        arrayMovies: [...prevState.arrayMovies, ...data.results],
-      }));
-    });
+    const { searchQuery, currentPage } = this.state;
+
+    this.setState({ isLoading: true });
+    Api.fetchSearchMovies(searchQuery, currentPage)
+      .then(data => {
+        this.setState(prevState => ({
+          arrayMovies: [...prevState.arrayMovies, ...data.results],
+          currentPage: prevState.currentPage + 1,
+        }));
+      })
+      .catch(error => this.setState({ error }))
+      .finally(() => {
+        this.setState({ isLoading: false });
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+        });
+      });
   };
   onChangeQuery = query => {
-    console.log(12345);
     this.setState({
       searchQuery: query,
       arrayMovies: [],
     });
     this.props.history.push({
-      pathname: this.props.location.pathname,
       search: `query=${query}`,
+      query,
     });
   };
 
   render() {
-    const { searchQuery, arrayMovies } = this.state;
+    const { arrayMovies, isLoading } = this.state;
 
     return (
       <>
         <PageHeading text="Movies" />
         <Searchbar onSubmit={this.onChangeQuery} />
         <Container>
-          <MoviesList Movies={this.state.arrayMovies} />
+          <MoviesList Movies={arrayMovies} />
         </Container>
+        <Container>
+          {!isLoading && arrayMovies.length !== 0 && (
+            <Button clickLoad={this.fetchMovies} />
+          )}
+        </Container>
+        <Container>{isLoading && <Loader />}</Container>
       </>
     );
   }

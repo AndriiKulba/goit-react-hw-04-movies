@@ -22,6 +22,8 @@ class DetailsMovie extends Component {
   handleGoBack = () => {
     const { history, location } = this.props;
 
+    console.log(history);
+    console.log(location);
     if (location.state && location.state.from) {
       return history.push(location.state.from);
     }
@@ -33,11 +35,10 @@ class DetailsMovie extends Component {
 
     return (
       <>
-        <Link to="">
-          <button className={s.BackBtn} onClick={this.handleGoBack}>
-            Go back
-          </button>
-        </Link>
+        <button className={s.BackBtn} onClick={this.handleGoBack}>
+          Go back
+        </button>
+
         <div className={s.MoviePage}>
           <div className={s.MovieImage}>
             {' '}

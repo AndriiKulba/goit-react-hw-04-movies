@@ -5,7 +5,8 @@ import Api from '../../services/Api';
 class Reviews extends Component {
   render() {
     const { reviews } = this.props;
-    return reviews.length > 0 ? (
+    console.log(this.props);
+    return reviews.results.length > 0 ? (
       reviews.results.map(review => {
         return (
           <li key={review.id} className={s.Reviews}>

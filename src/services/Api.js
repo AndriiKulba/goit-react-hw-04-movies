@@ -4,19 +4,10 @@ axios.defaults.baseURL = 'https://api.themoviedb.org/3';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original';
 
-
-
 async function fetchWithErrorHandling(url = '') {
   const response = await fetch(url);
   return response.ok
     ? await response.json()
-    : Promise.reject(new Error('Not found'));
-}
-
-async function fetcImagehWithErrorHandling(url = '') {
-  const response = await fetch(url);
-  return response.ok
-    ? await response()
     : Promise.reject(new Error('Not found'));
 }
 
@@ -26,19 +17,19 @@ function fetchImage(poster) {
   return url;
 }
 
-function fetchTrandMovies() {
-  let url = `${BASE_URL}/trending/movie/week?api_key=${KEY}`;
-  return fetchWithErrorHandling(url);
+function fetchTrandMovies(currentPage = 1) {
+  let url = `/trending/movie/week?api_key=${KEY}&page=${currentPage}`;
+  return axios.get(url).then(response => response.data);
 }
 
-function fetchSearchMovies(query) {
-  let url = `${BASE_URL}/search/movie?api_key=${KEY}&query=${query}&page=1`;
-  return fetchWithErrorHandling(url);
+function fetchSearchMovies(searchQuery = '', currentPage = 1) {
+  let url = `/search/movie?api_key=${KEY}&query=${searchQuery}&page=${currentPage}`;
+  return axios.get(url).then(response => response.data);
 }
 
 function fetchDetailMovies(id) {
-  let url = `${BASE_URL}/movie/${id}?api_key=${KEY}&append_to_response=credits,reviews`;
-  return fetchWithErrorHandling(url);
+  let url = `/movie/${id}?api_key=${KEY}&append_to_response=credits,reviews`;
+  return axios.get(url).then(response => response.data);
 }
 
 function fetchCreditslMovies(id) {

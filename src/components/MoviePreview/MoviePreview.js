@@ -3,7 +3,7 @@ import Api from '../../services/Api';
 import s from './MoviePreview.module.css';
 import defaultImage from './poster2.jpg';
 
-const MoviePreview = ({ title, image}) => {
+const MoviePreview = ({ title, image }) => {
   function getImage(bd) {
     return bd ? Api.fetchImage(bd) : defaultImage;
   }
@@ -11,7 +11,7 @@ const MoviePreview = ({ title, image}) => {
     <>
       <img src={getImage(image)} alt={title} className={s.MovieItem__image} />
 
-      <p>{title}</p>
+      <h3 className={s.title}>{title}</h3>
     </>
   );
 };
