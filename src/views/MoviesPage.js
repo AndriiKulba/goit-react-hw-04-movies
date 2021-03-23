@@ -11,11 +11,13 @@ class MoviesPage extends Component {
   state = {
     searchQuery: '',
     arrayMovies: [],
-    currentPage: 1,
+    currentPage: 2,
     isLoading: false,
     error: null,
   };
   componentDidMount() {
+    console.log(this.props);
+    console.log(this.state);
     this.props.location.query &&
       this.setState({
         searchQuery: this.props.location.query,
@@ -51,10 +53,12 @@ class MoviesPage extends Component {
     this.setState({
       searchQuery: query,
       arrayMovies: [],
+      currentPage: 1,
     });
     this.props.history.push({
       search: `query=${query}`,
       query,
+      currentPage: this.state.currentPage,
     });
   };
 
