@@ -15,14 +15,14 @@ class MoviesPage extends Component {
     isLoading: false,
     error: null,
   };
-  async componentDidMount() {
+  componentDidMount() {
     this.props.location.query &&
       this.setState({
         searchQuery: this.props.location.query,
         arrayMovies: [],
       });
   }
-  async componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.fetchMovies();
     }

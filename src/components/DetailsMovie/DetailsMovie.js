@@ -8,16 +8,16 @@ import Reviews from '../Reviews/Reviews';
 import routes from '../../routes';
 
 class DetailsMovie extends Component {
-  state = {};
+  state = { error: null };
   getImage(bd) {
     return bd ? Api.fetchImage(bd) : defaultImage;
   }
-  async componentDidMount() {
-    Api.fetchDetailMovies(Number(this.props.match.params.movieid)).then(
-      data => {
+  componentDidMount() {
+    Api.fetchDetailMovies(Number(this.props.match.params.movieid))
+      .then(data => {
         this.setState({ ...data });
-      },
-    );
+      })
+      .catch(error => this.setState({ error }));
   }
   handleGoBack = () => {
     const { history, location } = this.props;
@@ -29,17 +29,28 @@ class DetailsMovie extends Component {
   };
 
   render() {
-    const { title, poster_path, vote_average, overview, genres } = this.state;
-
+    const {
+      error,
+      title,
+      poster_path,
+      vote_average,
+      overview,
+      genres,
+    } = this.state;
+    const { location } = this.props;
     return (
       <>
+        {error && (
+          <div className="errorMassege">
+            Whoops, something went wrong: {error.message}
+          </div>
+        )}
         <button className={s.BackBtn} onClick={this.handleGoBack}>
           Go back
         </button>
 
         <div className={s.MoviePage}>
           <div className={s.MovieImage}>
-            {' '}
             <img
               src={this.getImage(poster_path)}
               alt={title}
@@ -68,7 +79,10 @@ class DetailsMovie extends Component {
           <h3>Additional information</h3>
           <p>
             <NavLink
-              to={`${this.props.match.url}/cast`}
+              to={{
+                pathname: `${this.props.match.url}/cast`,
+                state: { ...location.state },
+              }}
               className={s.link}
               activeClassName={s.activeLink}
             >
@@ -81,7 +95,10 @@ class DetailsMovie extends Component {
           />
           <p>
             <NavLink
-              to={`${this.props.match.url}/reviews`}
+              to={{
+                pathname: `${this.props.match.url}/reviews`,
+                state: { ...location.state },
+              }}
               className={s.link}
               activeClassName={s.activeLink}
             >
